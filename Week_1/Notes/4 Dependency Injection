@@ -6,3 +6,16 @@ Inverson of control (IoC) jokingly called "don't call us, we'll call you"
 - client gets called with the dependency by some system
     - in our case, the system is angularjs
 - client is not responsible for instiating the dependency
+
+How does dependency injection work?
+- it leverages the fact that you can get the string representation of a function and then parse it to find the services that start with $
+
+- the service that does this for angularjs is called $injector
+
+using $injector.annotate(controllerName) will show you all the services being injected
+
+Dependency injection for minified files
+-use contorollerName.$inject = ['$serviceName']; 
+    -serivce names in array need to be in same order as being used in the contoller params
+
+- you can also do inlin with the controller function name as the last element in the array

@@ -1,0 +1,27 @@
+Expression: {{ EXP }}
+Something that evaluates to some value
+- process by Angular and roughly similar to the result of eval(somejs)
+- exectued in the context of the scope and has access to proporties on $scope
+- doesn't throw erros if it results in a typeerror or referenceError
+- control flow functions ( ex. if statements) are not allowed
+- accept a filter or a filter chain to format the ouput
+
+- expressions can also be part of a tag 
+
+Interpolation
+Process of evaluating a string literal containing one or more placeholders, which are replaced with values
+- in Angular, this string: 
+    message is {{message}}
+
+    (provided message = "hello") is interpolaed into this string:
+
+    message is hello
+
+- still connected to the original message property
+ - if $scope.message changes, so will the interpolation result
+
+- interpolation can also be used on tags: 
+    <img src="images/yaakov_{{ stateOfBeing }}.png">
+
+ - becuase html is processed sequentially the img code above will return an error even if the code works. this is becuase the expression has not been evaluated by the time the html gets read. To get rid of the error use the ng-src attribute
+    <img ng-src="images/yaakov_{{ stateOfBeing }}.png">
