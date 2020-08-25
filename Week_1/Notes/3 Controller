@@ -1,0 +1,1 @@
+Controller is where the view data lives and where the view presentation logic lives, so, yes, it IS the ViewModel.

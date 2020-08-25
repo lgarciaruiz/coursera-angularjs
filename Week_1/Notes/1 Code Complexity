@@ -1,0 +1,5 @@
+High Cohesion - how well does on thing stick to doing just one thing. functions that have other fucntions in in it should be very closely related to doing just one thing
+
+Loose Coupling - change in one component doesnt affect another component. for example changing credit card payment funcionality should not affect how the shopping cart code is implemented.
+
+Starting browser-sync browser-sync start --server --directory --files "**/*"

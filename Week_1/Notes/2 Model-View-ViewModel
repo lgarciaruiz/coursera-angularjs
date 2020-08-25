@@ -1,0 +1,30 @@
+Model-View-ViewModel (MVVM)
+
+Model 
+Represents and holds RAW data
+- some of this data, in some form, may be displayed in the View
+- can also contain logic to retrieve the data from some source (example api)
+- contains no logic with displaing the Model
+
+View
+User interface
+- in a web app, its just the html and css
+- only displays the data that is given
+- never chagnes the data
+- declarativly broadcasts events, but never handles them
+    - if event happens where should it go to handle event
+
+ViewModel
+Representaton of the state of the view
+- Holds the data that's displayed in the view
+- responds to view events, aka presentation logic
+- calls other functionality for business logic processing
+- Never direclty asks the view to display anything; no elementbyid for example
+
+Declarative Binder
+declarativly binds the model of the viewModel to the view
+- declarativly means you don't have to write any code
+    -the framework does the magic
+-Key enabler of the whole MVVM pattern
+
+AngularJS allows you to manually modify the the viewmodel and so it is not restricted to MVVM. This makes AngularJS MV* or MV whatever

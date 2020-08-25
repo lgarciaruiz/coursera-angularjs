@@ -1,0 +1,8 @@
+Dependency Injection (DI)
+Design patter that implements inversion of control for resolving dependencies
+
+Inverson of control (IoC) jokingly called "don't call us, we'll call you"
+
+- client gets called with the dependency by some system
+    - in our case, the system is angularjs
+- client is not responsible for instiating the dependency
