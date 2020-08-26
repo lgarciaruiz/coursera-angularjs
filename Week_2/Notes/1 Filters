@@ -1,0 +1,21 @@
+Filters (Lecture 12 code)
+construct to change output of expression.
+- need to inject filter service
+
+var ouptut = $filter('uppercase')(value);
+
+filter service is filter function creating service, meaning in the example above the $filter('uppercase') is creating the function and then calling it on (value). Then returns the outcome.
+
+Sometimes the filter functions have custom arguments that change the filtering output. 
+
+var ouptut = $filter('currency')(value, customArg1, customArg2);
+
+- the custom arguments are specific to each filter type.
+
+You can also use these filtering feactures in the html part of your doc by placing a pipe and the type of filter afterwards in your {{}}
+    {{ "Hello" | uppercase }} it can also be a variable that exists in the $scope
+
+These also take custom arguments
+    {{ "hell" | currency : arg1 : arg2 }}
+
+Refer to the angularJs documentation for list of filters and custom arguments each one accepts

@@ -1,0 +1,65 @@
+Create your own custom filter (lecture 12 code)
+
+STEPS
+
+1. Define Filter Factory Function
+    function CustomFilterFactory(){
+        return function (input) {
+            //change input
+            return changedInput;
+        };
+    };
+
+- A factory is a central place in your code that produces new objects or functions
+
+2. Register Filter Factory with Module
+    angular.module('app', [])
+    .contorller('someController", ControllerFunction)
+    .filter('customName', CustomFilterFactory);
+
+- the custom filer name must be a valid angular expression identifier
+
+3. (JavaScript) Inject it with nameFilter
+    someController.$inject = ['$scope', 'customNameFilter'];
+
+    function someController($scope, customNameFilter){
+        var msg = "some input"l
+        customNameFilter(msg);
+    };
+- when injecting and using the custom filter you need to use the name given to it plus the word Filter after it; so if your filter's name is customName the way you would use it is customNameFilter
+    - DON NOT USE THE NAME OF THE CustomFilterFactory function
+- when using a custom filter, when you call it, it will not create a function and you can pass in the input to the the custom filter as a param.
+
+
+CUSTOM FILTER WITH CUSTOM ARGUMENTS
+STEPS
+1. Define Filter Factory Function with custom arguments
+    function CustomFilterFactory(){
+        return function (input, arg1) {
+            //change input
+            return changedInput;
+        };
+    };
+
+2. Register Filter Factory with Module
+    angular.module('app', [])
+    .contorller('someController", ControllerFunction)
+    .filter('customName', CustomFilterFactory);
+
+3. (JavaScript) Inject it with nameFilter
+    someController.$inject = ['$scope', 'customNameFilter'];
+
+    function someController($scope, customNameFilter){
+        var msg = "some input"l
+        customNameFilter(msg, "some val");
+    };
+
+3. (HTML) use it as registered name
+    {{'hello' | custom }}
+- when using this in the html no need to inject the filter into anything as long as it's registed with the module you're good; you also do not need to append the filter name with Filter
+
+- custom args:
+{{'hello' | custom : arg1 : arg2 }}
+
+- filters can also be chained using a pipe
+{{ "hello" | custom | uppercase }}
