@@ -22,9 +22,9 @@
          <div class="form-group">
              <button ng-click="checkIfTooMuch()" class="btn btn-default">Check If Too Much</button>
          </div>
-         <div class="form-group message">
+         <div class="form-group message" ng-if="message.message">
            <!-- Your message can go here. -->
-           <span ng-class="message.noData ? 'text-danger' : 'text-success'">{{ message.message }}</span> 
+           <span class="alert" ng-class="message.noData ? 'alert-danger' : 'alert-success'">{{ message.message }}</span> 
          </div>
    </div>
 
