@@ -1,0 +1,23 @@
+Watchers (lecture 14)
+Watchers live inside an array on the $scope service that keep watch of properties on the scope to see if they've changed.
+
+You can set up watchers on properties in the scope manually:
+
+- once you create a propertie (variable) on the scope add the following code to add a watcher to it manually. 
+     $scope.$watch('vaiableName', function(newValue, oldValue){
+     });
+
+Watchers will keep track of the property to see if it changed.
+
+You should never manually add watchers to your controller code
+
+Automatically adding watchers
+When you add {{ variable }} (interpolae) to the html file, anuglar adds wathers Automatically to the variable. 
+
+interpolated values always add a watcher.
+
+the digest loop is fired as soon as you instantiate any variables on the scope becuase it is checking what the variables where set to.
+
+
+TWO way binding - adding watcher
+The other way of adding a watcher is by adding ng-model="property". anytime this changes either in the mvmv or on the view it will fire the digest cycle.

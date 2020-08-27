@@ -1,0 +1,23 @@
+$digest and $apply (lecture 15)
+$digest and $apply are methods that can be added to events that are not part of the angular framework like ng-click or ng-keyup to keep the ui udpated with the correct data.
+
+These methods can be added to jquery or setTimeout events that would not trigger a digest loop because they are not part of the ng events.
+
+$digest
+adding this method is as simple as adding it inside the non ng event by saying $scope.$digest();
+
+- the issue with $digest is that if an error occurs as part of the code that the digest was added to it will not give you good error tracing.
+
+$apply
+this method adds the digest as well as better exception tracking.
+$apply is added by saying:
+  setTimeout(){
+    $scope.$apply(function () {
+        //add the code you'd like to apply the digest to here
+    })
+  , 2000}
+
+
+  ****setTimeout here was just used as an example. if you need to use something like setTimeout use the angular version which is $timeout, make sure you inject this service
+
+  Most of the time look for the angular specific serivce that handles same functionality 

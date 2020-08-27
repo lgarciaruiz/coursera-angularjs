@@ -1,0 +1,21 @@
+2-way, 1-way and 1-time Binding (lecrure 16)
+
+2-way Binding
+ng-model="name" is an example of two way Binding.
+This basically means that if the property changes on the html file it will also update the name property on the $scope
+
+-user can affect it and the controller can as well
+
+1-way Binding
+{{ lasName }} is an exampe of 1-way Binding
+
+- only the controller can change the value of this.
+
+You should not have more than 2000 watchers per page. More that 2000 can slow down your page.
+
+1-time Binding
+{{ ::fullName }} example of 
+this means that the angular will setup a watcher for this but the second it gets initialized the digest cycle will kick in and it will update the ui will repaint the browser and the property will be shown to the user. The angularjs will automatically remove the watcher for that propery.
+
+- 1-time bindings if you initialize them as empty with the plan to later on change their value and have them reflected in the ui it, will not work.
+That is because the second you initialized it as en empty string the watcher went away.

@@ -1,0 +1,10 @@
+Digest Cycle (lecture 14)
+The digest cycle is what checks if anything in the angular context has changed ($scope). The process is kicked off with $digest.
+
+The events have to be angular events for the array of watchers on the $scope to be triggered. Watchers can be added to properties on the $scope.
+
+When something happens the digest cycle gets started and goes through the list of watchers to see if anything changed. If nothing changed the loop stops but if something changed the cycle is reapeated until nothing changes
+
+Dirty checking is what the checking loop is referred to in game development.
+
+*** WHEN YOU SEE $$ in front of a property that is an internal angularjs property and you should never interact with it
