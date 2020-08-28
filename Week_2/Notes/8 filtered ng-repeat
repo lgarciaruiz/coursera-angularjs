@@ -1,0 +1,17 @@
+Filtered ng-repeat (lecture 18)
+
+Array has a special function called filter
+    - create new array where each item satisfies some condition of the comparison function passed into the filter function.
+
+
+    In my own words. 
+
+    the "filter" filter can be used in either html or js. it will create a new array elements that pass a given expression on a given array. It will create this on the fly and provide you the array. 
+
+    This can be used to allow a user to search a list and have only the elements that match that criteria show up on the ui by giving the input element an ng-model="searchCriteria"
+    and setting the searchCriteria as the filter in the filter function inside an ng-repeat directive. see lecture 18 for example
+
+    ng-repeat="item in collection | filter: searchCriteria"
+
+    the filer filter is similar in what it does to the filter array method
+

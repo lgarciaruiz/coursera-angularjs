@@ -1,0 +1,26 @@
+ng-repeat
+ng-repeat is a directive that allows you to loop over data.
+
+this directive is very similar to a foreach loop.
+
+ng-repeat watches the entire collection as a whole.
+
+- to use ng-repeat add it to an html element as an attribute and create a variable to use as the item per index of a $scope collection. for example:
+
+    <li ng-repeat="item in shoppinglist">{{ item }}</li>
+
+    This code will create a list item for each each item inside the shopping list collection (array) and interpolate the item as the text.
+
+- you can also use properties to get at properties of an object if the array items are objects. 
+
+    <li ng-repeat="item in shoppinglist">{{ item.quantity }} {{ item.name }}</li>
+
+- you can add a watcher to a specific item in a collection as well using the ng-model directive. 
+
+    <input type="text" ng-model="shoppingList[0]">
+
+    The code above will have the item at index 0 as it's model and if you change this item it will also change anywhere else you're using shoppingList[0] item in your ui or data.
+
+- using $index in the html will allow you to retrieve the index of the item you're currently iterating over. You can interpolate this to the ui. $index is exposed when using ng-repeat to the body of the host tag
+
+- because ng-repeat adds a watcher to the entire list automatically it is possible to add new items to the list and have them reflected on the ui and data. for example look at lecture 17 lines 30-32
