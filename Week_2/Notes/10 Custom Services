@@ -1,0 +1,23 @@
+Custom Services (lecture 20)
+Custom service can be used to handle business logic and share code, state, data throughout app and controllers, even when controllers are not related.
+
+Register Service Function Constructor
+angular.module('appName', [])
+.controller('controllerName', controllerNameFunction)
+.service('serviceName', serviceNameFunction);
+
+- the fucntion given as the parameter to the service method is treated as a function Constructor
+- the name of the service is what is used to inject into other services, controllers, etc.
+- guaranteed to be a singleton - can be used to share data because the one holds all the data
+- Lazily instantiated
+
+WHAT IS A SINGLETON??
+Singleton Design Pattern
+Restricts object to always having a single instance
+- each dependent component gets a reference to the same instance
+- Multiple controllers injected with a service will all have access to the same service instance
+    - this enables us to share data throughout controllers and throughout the application
+
+WHAT IS LAZILIY INSTANTIATED??
+Lazily instantiated - only created if an application component declares it as a dependency
+- if no components are dependent on the service it will never get created.

@@ -1,1 +1,15 @@
 Controller is where the view data lives and where the view presentation logic lives, so, yes, it IS the ViewModel.
+
+The job of the vewModel is represent the state of the view.
+
+Should not contain much, if any, business logic. Should pass on the buisness logic responsiblity to other components.
+
+Use Controllers to:
+- set up the initial state of $scope
+- add behavior to the $scope
+    - handling events and updating view state.
+    - updating the view as a result of the data on one of the bindings on the $scope
+
+Don NOT use controllers to:
+- handle buisness logic directly
+- share code or state across controllers

@@ -1,0 +1,20 @@
+{
+  "name": "coursera-angularjs",
+  "version": "1.0.0",
+  "description": "Learning angular js with Coursera",
+  "main": "angular.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " browser-sync start --server --directory --files \"**/*\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgarciaruiz/coursera-angularjs.git"
+  },
+  "author": "Leo Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lgarciaruiz/coursera-angularjs/issues"
+  },
+  "homepage": "https://github.com/lgarciaruiz/coursera-angularjs#readme"
+}

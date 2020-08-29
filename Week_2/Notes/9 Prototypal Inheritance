@@ -1,1 +1,28 @@
 Prototypal Inheritance (lecture 19)
+Prototypal Inheritance is when new instance of an object inherit certain properties from a prototype object. The child object will inherit some properties from parent even if the child object does not have those properties set inside of it. The javascript engine will walk up the protype chain and look for a property in the parent if none exists in the child object.
+
+When changing a property by setting it on the child object as child.property = 'something' you are masking the property and the engine will not walk up the chain. The child will have property equal to something while the parent will have it set to the original setting.
+
+However when doing the same thing to an object property (not a primative type) that is not currently set in the child object the engine will walk up to the parent object's property object and change the object there. So both the child and parent will be pointing to the exact same object in memory.
+
+
+$scope Inheritance
+
+When you declare that a controller is assigned to a particular part of your page some natural nestiong of controllers will occur becuase you will have more than one controller for different parts of your page.
+
+These nestings means that your inner controllers (child controllers) will have access to the outer controller (parent controller) because of the scope Inheritance. this is true unless you mask the properties within the child controllers by declaring same properties on the childs own scope.
+
+It is advantagous to work with object properties of a controller instead of primative values so that you can change the object properties of both the child and parent controller.
+
+***** Controller as Syntax ****
+Controller as syntax is a convinient way to attach the controller to an object so that property masking does not get in the way.
+ng-controller="controller1 as ctrl1"
+ng-controller="controller2 as ctrl2"
+
+when you do this the bindings ctrl1 and ctrl2 used above get added to the $scope of the contoller they belong to as bindings that contain an object instance of the controllers they refer to.
+
+when using controller as syntax, you can begin to use the this keyword inside the controller function without having to inject the $scope service to the controller. This is because the this keyword becomes synonomous with the ctrl1 binding that is already attached to the $scope.
+
+Controller as syntax also allows you to use ctrl1.myProp and ctrl2.myProp inside any of their nested elements to better identify things.
+
+$parent is a property in the scope that allows you to access the parent of the current controller
