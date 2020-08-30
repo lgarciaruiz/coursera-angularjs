@@ -1,0 +1,10 @@
+ng-if, ng-show, ng-hide (lecture 22)
+Directives to manipulate DOM elements
+
+ng-if will add an element to DOM if the expression inside it evaluates to true will remove element from DOM if it's false
+
+ng-show shows an element if the expression inside it evaluates to true otherwise it's hidden but still exists in DOM
+
+ng-hide hides an element if the expression inside it evaluates to true otherwise it's shown
+
+

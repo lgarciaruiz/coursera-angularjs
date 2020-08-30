@@ -1,0 +1,61 @@
+Custom Serivces with .factory() (lecture 21)
+Factory Design Pattern - it's a central place that produces new object or functions.
+
+- can produce any type of object, not just a singleton
+- can be used to produce dynamically customizable services
+
+Factory vs Service 
+.factory() is NOT just another way of creating the same service you can create with .service() but it CAN BE.
+
+.service() is also a factory, but a much more limited one compared to .factory(). It's a foactor ythat always produces the same type of service - a singleton, without an easy way to configure its behavior.
+
+.service() is usually used for something that doesnt require any configuration at all
+
+
+Register Service Factory Function
+angular.module('appName', [])
+.controller('ctrlName', ctrlFunc)
+.factory('factoryName',factoryNameFunc);
+
+for factory the factoryNameFunc or the function is what is expected to produce the service not the service itself.
+
+- use name of factory service to use the factory service
+
+Writing the factory function - returns function
+var factory = function (){
+    var factory = function(){
+        return new SomeService();
+    };
+
+    return factory;
+};
+
+this is one way of implementing a factory function. where the factory function returns a function that when used, it returns a function with a new service instance.
+
+function CustomService(){
+    var factory = {
+        getSomService: function: (){
+            return new SomeService();
+        }
+    };
+    return factory
+};
+
+This is a different way where you return an object literal then use it to retrieve the service SomeService which is a function that returns a new service instance.
+
+Both of these we are responsible for creating the new service.
+
+How to access the service with these ways of implementing the factory.
+
+with object literal approach
+
+var someServ = factoryNameFunc.getSomService();
+
+someServ.method();
+
+with the function implementation
+
+var someServ = factoryNameFunc();
+someServ.method();
+
+

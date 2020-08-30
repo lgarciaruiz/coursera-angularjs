@@ -1,0 +1,59 @@
+Custom Services .provider() (lecture 22)
+A factory that provides a service
+- this is the most verbose and the most flexible method of creating services in angular becuase you can configure at the time of using or at bootstrapping of app (in the beginning of it all!).
+
+- with .provider() you can create a factory that is dynamically configurable at the time of using the factory, but you can also configure it just once at the bootstrapping of your entire app. and then use that factory throught your app with the custom settings.
+    - configure the factory before the app starts.
+
+- the provider() is what is called behind the scenes of angular when you call .factory or .service()
+
+
+STEPS FOR USING PROVIDER()
+1. Define Provider Function
+
+    function ServiceProvider(){
+        var provider = this;
+        provider.config = {...};//provide config object usually with defaults
+
+        provider.$get = function(){//$get property is function that is directly attached to the provider instance
+            var service = new Service(provider.config.prop);
+        } //this function is just like the one we provide to the .factory()
+
+        returns service;
+    }
+
+2. register .provider() with the module
+    angular.module('appName',[])
+    .controller('ctrlName', ctrl)
+    .provider('Service', ServiceFuncName);
+
+    name of service is the name that will be injected into other services
+
+3. inject service like normal - using serivce name defined in .provider()
+    Ctrl.$inject = ['$scope','Servce'];
+    function Ctrl($scope, Service){
+        Servcie.someMethod();
+    }
+
+4a. (Optional): Resiter Config Function
+    angular.module('appName',[])
+    .controller('ctrlName', ctrl)
+    .provider('ProviderName', provider)
+    .config(Config);
+
+    - special method you can register on the module that is guaranteed to run before any factory, controller or service are created.
+
+4b. (Optional): Inject Provider into Config
+    angular.module('appName',[])
+    .controller('ctrlName', ctrl)
+    .provider('Service', ServiceProvider);
+
+    Config.inject = ['ServiceProvider'];//Here ServiceProvider is the [NameOfService]+Provider; which in this case the name of Service is Service 
+
+    function Config(ServiceProvider){
+        ServiceProvider.config.prop = 'value';
+    };
+
+    - then we can get at the service's config properties to configure for our app
+
+    config cannot inject regular components into .config because they don't exist at the time the config method is called BUT we can inject te provider service with nameProvider

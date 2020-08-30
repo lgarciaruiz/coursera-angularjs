@@ -1,4 +1,4 @@
-ng-repeat
+ng-repeat (lecture 17)
 ng-repeat is a directive that allows you to loop over data.
 
 this directive is very similar to a foreach loop.
