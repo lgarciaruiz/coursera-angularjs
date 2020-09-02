@@ -32,13 +32,14 @@ function ShoppingListService($q, WeightLossFilterService) {
   // List of shopping items
   var items = [];
 
+  // this code works but it's a bit messy. the promise uses then methods that have the function the should run as well as the 2nd param which is the error function making it hard to read
   // service.addItem = function (name, quantity) {
   //   var promise = WeightLossFilterService.checkName(name);
   //
   //   promise.then(function (response) {
   //     var nextPromise = WeightLossFilterService.checkQuantity(quantity);
   //
-  //     nextPromise.then(function (result) {
+  //     nextPromise.then(function (result) {//get result from promise
   //       var item = {
   //         name: name,
   //         quantity: quantity
@@ -52,40 +53,43 @@ function ShoppingListService($q, WeightLossFilterService) {
   //   });
   // };
 
-
+// this version of the same method uses the catch() mehtod which will catch an error anywhere it happens so the 2nd error function param for the then method can be removed; making it abit easier to read
   // service.addItem = function (name, quantity) {
   //   var promise = WeightLossFilterService.checkName(name);
-  //
+  
   //   promise
-  //   .then(function (response) {
+  //   .then(function (response) {//response but doing nothing with it becuase we knnow in this case response is empty if passed
   //     return WeightLossFilterService.checkQuantity(quantity);
-  //   })
-  //   .then(function (response) {
+  //   })//no second function for error; if error exists it will bubble up until it gets caught by catch(); this will return a promise and feed it to the next then()
+  //   .then(function (response) {//if code gets to here without error that means we are good to add the item to the array
   //     var item = {
   //       name: name,
   //       quantity: quantity
   //     };
   //     items.push(item);
   //   })
-  //   .catch(function (errorResponse) {
+  //   .catch(function (errorResponse) {//handle error in one spot; catches errors from any of the block above
   //     console.log(errorResponse.message);
   //   });
   // };
 
 
+  //this peice of code runs both checks in parallel; this is asyncronous and will take only the amount of time of the longest promise to resolve instead of all promise times added together
   service.addItem = function (name, quantity) {
+    //get both promises for both checks
     var namePromise = WeightLossFilterService.checkName(name);
     var quantityPromise = WeightLossFilterService.checkQuantity(quantity);
 
+    //use .all() method which takes array of promises; any amount
     $q.all([namePromise, quantityPromise]).
-    then(function (response) {
+    then(function (response) {//the .then() method runs once all promises given in the array have been resolved; however if any of the promises return an error then all promises will stop trying to resolve and it will return an error message
       var item = {
         name: name,
         quantity: quantity
       };
       items.push(item);
     })
-    .catch(function (errorResponse) {
+    .catch(function (errorResponse) { //catch errors in ANY of the promises
       console.log(errorResponse.message);
     });
   };
@@ -105,7 +109,7 @@ function WeightLossFilterService($q, $timeout) {
   var service = this;
 
   service.checkName = function (name) {
-    var deferred = $q.defer();
+    var deferred = $q.defer(); //returns a promise
 
     var result = {
       message: ""
@@ -114,14 +118,15 @@ function WeightLossFilterService($q, $timeout) {
     $timeout(function () {
       // Check for cookies
       if (name.toLowerCase().indexOf('cookie') === -1) {
-        deferred.resolve(result)
+        deferred.resolve(result)//pass it the result; which is empty if no error
       }
       else {
         result.message = "Stay away from cookies, Yaakov!";
-        deferred.reject(result);
+        deferred.reject(result); // pass it the result which is result.message with "Stay away from cookies, Yaakov!"
       }
     }, 3000);
 
+    //return the promise back to the caller of function - gives a hook to tap into either resolution or error
     return deferred.promise;
   };
 

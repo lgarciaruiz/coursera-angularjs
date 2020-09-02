@@ -1,0 +1,42 @@
+Ajax with $http Service (lecture 25)
+
+$http, service that makes it easy to communicate with the backend. It is asyncronous and based on the deferred and promised API exposed by the $q service.
+
+
+$http Service is itself a function which takes an object with some properties.
+
+- The only required property is the url;
+- If the method is not given GET is used as default;
+- Param property is an object with property names and it's values; these values are url encoded when used in the http params object
+    - no spaces or special characters
+    - special characters are replaced with % and two hexadecimal digits
+    - spaces are replaced by "+"
+    - if you use a variable to set the params they will not be url encoded
+
+- Remember to add your $scope.variable or any variable that you want to add the response from the $http service inside of the response body not outside.
+
+$http({
+    method: "GET",
+    url: "http://someurl",
+    params: { param1: "value1"} //this is equal to http://someurl?param1=value1
+}).then(
+    function success(response){//functions here are named but can be annonymous
+        //do something with response
+        //response.data is perhaps the most used in here; holds the response body
+        //if json is in response body this method will automatically turn the response to a javascript object
+    },
+    function error(response) {
+        //do something with error response
+    }
+);
+
+SUMMARY
+- $http service is based on the promise api exposed by the $q service
+- it is a function
+    - takes a single config object as param (url only required prop)
+    - returns a promise to be resolved with .then() mehtod
+- reponse.data proptery holds the server data response (response payload)
+    - if JSON, automatically gets transformed into a JS object
+
+
+module.constant can be used as an injectable constant

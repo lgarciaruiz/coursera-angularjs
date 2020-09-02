@@ -1,0 +1,62 @@
+Asynchronous Behavior with Promises and $q (lectrue 24)
+
+Before promises there was callbacks
+Issues with callbacks
+- no easy & straightforward way to pass the results of asyncFunction back to its caller 
+    - especially if the recepient of the result is a few layers away
+- callback hell!
+- Hard to read
+- running things in parrallel and have error handling waould be hard to accomplish
+
+Promise
+Object which can be passed around or returned that holds references to the outcome of Asynchronous Behavior
+ - in agnular, promises are created with the $q service
+
+AngularJS $q Service Promise
+using the $q.defer() allows you to manually create an Asynchronous environment
+function asyncFunction (){
+    //creates async environment with all the hooks into it, including the promise object
+    var deferred = $q.defer();
+    // Marks successful completion, wraps data for promise
+    if(...) { deferred.resolve(result); }
+    // Marks unsuccesful completion, wraps data for promise; erro data probably
+    else { deferred.reject(error); }
+    // returns promise to caller (a hook back to this entire process)
+    return deferred.promise;
+}
+
+in the code above the if and else statements can be done asynchronously
+
+next you need to call the async function and capture the promise in a variable
+
+var promise = asyncFunction();
+
+//args to .then() are two functions
+promise.then(function (result) {
+    //do something with result
+}, 
+function (error) {
+    //do something with error
+});
+
+you can change .then() because it also returns a promise
+
+it also possible to use $q to resolve promises and handle the result using .all()
+$q.all([promise1, promise2])
+.then (function (result){
+    //some code with result
+})
+
+.catch(function (error){
+    //handle error
+});
+
+Summary
+- promises gives us a lot of flexibility when dealing with Asynchronous Behavior
+- the $q serviced is the angluar implementatoin of promise api;
+- promises either get resolved or rejected
+- the then() takes 2 arguments (both functions)
+    - 1st function handles success or resolve outcome
+    - 2nd function to handle errors or reject outcome
+    - then() itslef returns a promise so it is chainable
+- $q.all method allows us to execute multiple promises in parrallel, handling success/failure in one central place

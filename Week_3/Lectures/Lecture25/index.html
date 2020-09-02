@@ -14,7 +14,7 @@
       <h3>List of Menu Categories</h3>
       <ul>
         <li ng-repeat="category in menu.categories">
-          (<a href="" ng-click="menu.logMenuItems(category.short_name);">{{ category.short_name }}</a>)
+          <a href="" ng-click="menu.logMenuItems(category.short_name)">({{ category.short_name }})</a>
           {{ category.name }}
         </li>
       </ul>
