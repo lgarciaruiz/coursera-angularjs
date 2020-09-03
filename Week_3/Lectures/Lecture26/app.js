@@ -8,24 +8,19 @@ angular.module('ShoppingListDirectiveApp', [])
 .directive('listItemDescription', ListItemDescription)
 .directive('listItem', ListItem);
 
+function ListItemDescription () {
+  var ddo ={
+    template : '{{ item.quantity }} of {{ item.name }}'//variables used in template will have access to the variables from the scope of the controller where this directive lives in the html code
+  };
+  return ddo;//directive definition object; needs to be returned
+}
 
 function ListItem() {
   var ddo = {
-    templateUrl: 'listItem.html'
+    templateUrl: 'listItem.html' //using a template url so that we can make the directive template live in a file
   };
-
   return ddo;
 }
-
-
-function ListItemDescription() {
-  var ddo = {
-    template: '{{ item.quantity }} of {{ item.name }}'
-  };
-
-  return ddo;
-}
-
 
 // LIST #1 - controller
 ShoppingListController1.$inject = ['ShoppingListFactory'];

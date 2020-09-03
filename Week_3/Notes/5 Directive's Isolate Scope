@@ -1,0 +1,84 @@
+Directive’s Isolate Scope: “=” and “@” (Lecture 28)
+
+Without configuration the scope of the parent is the scope of the directive. It is better to breakaway from this inheritance to allow the directive to be used anywhere in your app without having to depend on the one scope in particular
+
+Isolate Scope
+function MyDirective(){
+    var ddo={
+        scope : { } // specifying the scope property with an empty object isolates the scope
+    };
+    return ddo;
+}
+
+To get data to to pass to the scope we add properties to the scope property object to bind data to it.
+
+function MyDirective(){
+    var ddo={
+        scope : {
+            //myProp is a local scope property, the value is the html attribute name, the equal sign means it is a bidirectional binding
+            myProp: '=attributeName'
+         }
+    };
+    return ddo;
+}
+
+In my words, the scope above is being told to pull in the attributeName value from the html and assign it to the variable myProp on the scope of MyDirective, using the equal sign means that if the value changes in either MyDirective or the parent element to MyDirective the change will reflect in all places
+
+
+function MyDirective(){
+    var ddo={
+        scope : {
+            myProp: '='
+         }
+    };
+    return ddo;
+}
+
+if you only use the = sign angularjs will assume that the property name you are trying to bind to myProp is my-prop or the html normalized version of it
+
+function MyDirective(){
+    var ddo={
+        scope : {
+            myProp: '=?'
+         }
+    };
+    return ddo;
+}
+
+adding a ? after the = means the attribute is optional. This means that this may not be there or be undefined
+
+Using in the hmtl 
+<my-directive my-prop="outerProp"></my-directive>
+
+
+
+DOM attribute property binding
+function MyDirective(){
+    var ddo={
+        scope : {
+            myProp: '@myAttribute'
+         }
+    };
+    return ddo;
+}
+
+Binds myProp to the value of DOM attribute my-attribute. The result of this is always a string
+Using in the hmtl 
+<my-directive my-attribute="{{outerProp}}"></my-directive>
+
+This is one way binding: as the value of outProp changes, so does the value of my-attribute and so does the value of myProp inside the directive; but if we change myProp in our directive it will not change the outerProp
+
+There is nothing stopping us from doing this; using interpolation
+<my-directive 
+    my-attribute="Hi {{outerProp + '!' }}">
+</my-directive>
+
+
+Summmary 
+- isolate scope on the directive
+    - breaks the protypal inheritance of the scope from the parent
+    - maeks the directive more independent, less coupled w/controller
+- we pass values into the directive using scope bindings
+- bidirectional binding ('=') is such that directive scope property chagne affects the bound property and vice versa
+- DOM attribute value binding ('@') always results in the dirctive proptery being a string
+    - changes to DOM attribute value are propogated to the directive propety, but not the other way around

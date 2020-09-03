@@ -1,0 +1,24 @@
+restrict Property of the Directive Definition Object (DDO) - (lecture 27)
+
+the restrict property tells the angularjs compiler what dom elements it should replace with the template of the DDO
+
+- default is AE - Attribute or Element
+
+function MyDirective(){
+    var ddo = {
+        restrict : 'A' //restricting to Attributes only
+    }
+
+    return ddo;
+}
+
+- It is a best practice to restrict to attribute if directive is extending behavior, eg ng-repeat; it doesnt have any content of its own but it's giving some behavior
+
+- Best practice: restrict to element if is defining a component with an associate template, like our <list-item></list-item> the template has content
+
+- Best practice: to not restrict to classes or comments
+    - this was used for old browser compatability and not used anymore
+
+When restricting a directive make sure that your template for the directive makes sense within the context of your app
+
+Once you restrict to certain DOM elements the angularjs compiler will ignore any DOM elements that should not be used becasue of the restict params

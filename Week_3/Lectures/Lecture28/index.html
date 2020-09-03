@@ -15,9 +15,9 @@
       <input type="text" ng-model="list1.itemName" placeholder="item name">
       <input type="text" ng-model="list1.itemQuantity" placeholder="quantity">
       <button ng-click="list1.addItem();">Add Item</button>
-
+      <!-- passing in the title from controller ShoppingListController1 being used as list1 is done with interpolation becuase one way binding is always a string passed into the isolated scope of the directive-->
       <shopping-list my-list="list1" title="{{list1.title}}"></shopping-list>
-      <div ng-if="list1.errorMessage" class="error">Error: {{list1.errorMessage}}</div>
+      <div ng-if="list1.errorMessage" class="error">Error: {{list.errorMessage}}</div>
     </div>
 
     <!-- LIST #2 (limited to 3 items) -->
@@ -25,7 +25,7 @@
       <input type="text" ng-model="list2.itemName" placeholder="item name">
       <input type="text" ng-model="list2.itemQuantity" placeholder="quantity">
       <button ng-click="list2.addItem();">Add Item</button>
-
+      <!-- here title is just bing set by hardcoding a string to it -->
       <shopping-list my-list="list2" title="Shopping List #2 (limited to 3 items)"></shopping-list>
       <div ng-if="list2.errorMessage" class="error">Error: {{list2.errorMessage}}</div>
     </div>

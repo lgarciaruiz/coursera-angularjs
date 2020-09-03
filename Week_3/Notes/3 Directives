@@ -1,0 +1,33 @@
+Directives: Dynamic HTML (Lecture 26)
+Marker on a DOM element that tells Angular's HTML compiler to attach a sepcified behavior to that DOM element
+
+- The compiler can transform/change the DOM elements and its children
+- A marker can be attribute, element name, comment or CSS class
+    - try sticking to elements and attributes 
+
+Directives allow you to extend html
+
+Steps to create Directives
+1- Register Directive
+    angular.module('app',[])
+    .controller('ControllerName', controllerNameFunction)
+    .directive('directiveName', directiveNameFunction);
+
+    - directive name should be a normalized name that will appear in html so in the html you would use the name directiveName as directive-name
+    - factory function - returns DDO:
+       - Directive Definition Object
+       - the factory function will execute only once not everytime it finds it in the html. You can use it to initialize things
+
+2- Define factory function
+    directiveNameFunction.$inject = [....] // you can inject other services, controllers etc..
+    function directiveNameFunction(){
+        var ddo = {
+            template: 'Hello World!'
+        };
+        return ddo; // need to return the directive itself
+    }
+    
+3- Use in HTML
+<directive-name></directive-name> //Make sure to normalize name of directive initialized
+
+
