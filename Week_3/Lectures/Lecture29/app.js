@@ -12,34 +12,33 @@ function ShoppingListDirective() {
   var ddo = {
     templateUrl: 'shoppingList.html',
     scope: {
-      items: '<',
-      title: '@'
+      items: '<', //one way binding
+      title: '@' //one way binding where result is always a string
     },
     // controller: 'ShoppingListDirectiveController as list',
     controller: ShoppingListDirectiveController,
     controllerAs: 'list',
+    //bind isolate scope properties to the controller so you have access to these properties
     bindToController: true
   };
 
   return ddo;
 }
 
-
 function ShoppingListDirectiveController() {
-  var list = this;
+  var shopppingList = this;
 
-  list.cookiesInList = function () {
-    for (var i = 0; i < list.items.length; i++) {
-      var name = list.items[i].name;
-      if (name.toLowerCase().indexOf("cookie") !== -1) {
+  shopppingList.cookiesInList = function() {
+    //we have access to items array becuse the items on the isolate scope were bound to the controller
+    for (var i = 0; i < shopppingList.items.length; i++){
+      var name = shopppingList.items[i].name;
+      if (name.toLowerCase().indexOf('cookie') !== -1){
         return true;
       }
-    }
-
+    };
     return false;
   };
 }
-
 
 ShoppingListController.$inject = ['ShoppingListFactory'];
 function ShoppingListController(ShoppingListFactory) {

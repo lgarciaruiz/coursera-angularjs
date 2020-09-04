@@ -1,0 +1,58 @@
+Directive APIs and “&” (lecture 30)
+
+Sometimes in our apps we will need our directive's controller to send some data back to the parent's controller which will act on the data being used in the directive. 
+
+To accomplish this we can establish a link to the mehtod using the '&' binding.
+
+Steps 
+1. Define Method In Controller
+    function Controller() {
+        this.method = function (arg1) {
+            this.prop = "hi" + arg1;
+        };
+    }
+
+- methods and properties used need to point to the parent controller instance
+- the arg1 will come from the child directive
+
+2. Declare Method Reference in Directive
+    function MyDirective() {
+        var ddo={
+            scope: {
+                myMethod: '&method'
+            },
+            templaateURL: 'url.html'
+        }
+        return ddo;
+    }
+
+- myMethod is the prop name that we can reference to use the passed in method that exists on the parent scope
+- the name after the & is the name we will need to use for the method passed in through the html
+
+3. Declare in Parent's Template
+    <div ng-controller="ParentController as pCtrl">
+        <my-directive method="pCtrl.method(myArg)"></my-directive>
+    </div>
+- use the attribute name used in the DDO to reference the method and set it equal to the parents controller method as the value
+- the myArg argument is only a key and we are not passing it into the isolate scope of the directive's controller
+    - it is a placeholder key label that we can use later
+
+4. Map Method & Args in Directive's Template
+    <button ng-click="dirCtrl.myMethod({myArg: 'v1'});">
+        remove item
+    </button>
+
+- use directives controller label and use the name from the isolate scope to call the method. 
+- into the method you pass in the argument as an object where the argument key label used in step 3 (myArg) is as the property that the actual argument you're passing is is mapped to
+
+
+Summary
+- the & binding allows us to execute an expression (such as a function value) in the context of the parent scope
+    - to manipulate data outside of the directive when a directive is only in charge of showing the data it is given
+- Parent template must declare an attribute providing:
+    - method reference to call on the parent
+    - argument keys for directive to bind value to
+- direcive: 
+    - calls the referenced method
+    - provides a map of argument key to value pairs
+    - allows directive to pass data back to parent from isolate scope

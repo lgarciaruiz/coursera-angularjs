@@ -13,7 +13,7 @@ function ShoppingListDirective() {
     scope: {
       items: '<',
       myTitle: '@title',
-      badRemove: '=',
+      badRemove: '=', // when passing in a function this way the context does not stay as the parent controllers context instead it changes to the child controller and that coud be a bad thin as in this case
       onRemove: '&'
     },
     controller: ShoppingListDirectiveController,
@@ -61,7 +61,7 @@ function ShoppingListController(ShoppingListFactory) {
   };
 
   list.removeItem = function (itemIndex) {
-    console.log("'this' is: ", this);
+    console.log("'this' is: ", this);//using two way binding makes 'this' point to the shopping list directive controller because it was two way binded
     this.lastRemoved = "Last item removed was " + this.items[itemIndex].name;
     shoppingList.removeItem(itemIndex);
     this.title = origTitle + " (" + list.items.length + " items )";

@@ -1,0 +1,82 @@
+Using Controllers Inside Directives (Lecture 29)
+Bundle directive behavior in it's own controller
+
+Steps to use a controller inside a directive
+Step 1: Declare controller in Directive
+
+    function MyDirective() {
+        var ddo = {
+            scope: {
+                prop: '=',
+            },
+            controller: ControllerFunction,
+            bindToController: true,
+            controllerAs: 'myCtrl',
+            templateURL: 'template.html'
+        };
+        return ddo;
+    }
+
+    controller property: function that will implement the controller.
+
+    bindToController property: Attach decalred scope properties to controller instance instead of directly to $scope
+        - tells angular to place the $scope properties (variables) on the controller instance instead of directly in the $scope
+
+    controllerAs property: specifies label of controller so that we can reference properties and methods using the contoller instance.
+
+Step 2: Define Controller
+    ControllerFunction.$inject = ['Serivce'];
+    function ControllerFunction(Serivce) {
+        var myCtrl = this;
+
+        myCtrl.method = function () {
+            var name = "Hello " + myCtrl.prop;
+            ..... more code .....
+        }
+    }
+
+    above we are using another best practice which is to create a variable inside the function that is assigned this function, then use that variable name to assign methods as usual. You are then able to use the controller definition inside the methods.
+
+Step 3: Use in Directive's template
+    <div ng-if="myCtrl.method()">
+        {{ myCtrl.prop }}
+    </div>
+
+    - Use the controller name as defined in the controllerAs property on the DDO
+
+
+Best practice - When using Bi-Directional binding or '=' is it a best practice to avoid changin the value inside the directive.
+    - This means that using '=' when you are not going to be changing values inside the directive you are wasting resources by using bi-directional binding because angularjs is watching both values.
+    - so use One-Way Binding '<'
+
+One-Way Binding '<'
+One-way binding: watches only the identity of the parent property, not the property inside the directive.
+    - IMPORTANT NOTES
+        - this does not change how JavaScript works
+        - if you pass in a primitive like a number using one way binding, value outside the directive will not be affected by anything you do in the directive with the passed in value.
+        - if you pass in an object and you change the value of a property of that object, the context outside of the directive WILL be AFFECTED, even if no watchers are triggered. This is becuase objects point to the same instance of the object.
+
+
+NOTE:
+Using the example above for making a controller for a directive will not make it visible outside of your file becuase the code lives inside an IFFE.
+
+If you need to use the controller in multiple places you can register the controller as normal to the angular module and set the controller on the directive using a string. See example below:
+    angular.module('appName', [])
+    .controller('directiveCtrl', directiveCtrlFunction)
+    .directive('directive', directiveFunction);
+
+
+    function directiveFunction() {
+        var ddo = {
+            templateURL: 'url.html',
+            scope: {
+                prop1: '<',
+                prop2: '=',
+                prop3: '@'
+            },
+            controller: 'directiveCtrl as dirCtrl',
+            bindToController: true
+        }
+    }
+
+- Registering the controller to the module allows you to reuse the controller anywher you are using the module for your app.
