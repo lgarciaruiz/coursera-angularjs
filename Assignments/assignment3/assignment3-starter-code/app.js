@@ -10,15 +10,20 @@ NarrowItDownController.$inject = ['menuSearchService']
 function NarrowItDownController(menuSearchService) {
     var narItDwnCtrl = this;
 
-    narItDwnCtrl.searchTerm = '';
+    narItDwnCtrl.searchTerm;
     
     narItDwnCtrl.searchItem = function () {
-        //retrieve promise and set it to found property
-        var promise = menuSearchService.getMatchedMenuItems(narItDwnCtrl.searchTerm);
-        promise.then(function(result){
-            narItDwnCtrl.found = result;
-            //console.log(narItDwnCtrl.found);
-        })
+        console.log(narItDwnCtrl.searchTerm);
+        if (narItDwnCtrl.searchTerm){
+            //retrieve promise and set it to found property
+            var promise = menuSearchService.getMatchedMenuItems(narItDwnCtrl.searchTerm);
+            promise.then(function(result){
+                narItDwnCtrl.found = result;
+                narItDwnCtrl.nothingFound = narItDwnCtrl.found.length > 0 ? false : true;
+            })
+        } else {
+            narItDwnCtrl.nothingFound = true;
+        }
     };
 
     narItDwnCtrl.removeItem = function(index) {
@@ -30,7 +35,8 @@ function FoundItemsDirective() {
     var ddo = {
         scope: {
             items: '<',
-            onRemove: '&'
+            onRemove: '&',
+            notFound: '<',
         },
         templateUrl: './foundItems.html'
     };

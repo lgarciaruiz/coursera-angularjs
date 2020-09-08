@@ -1,5 +1,4 @@
 <div class="row">
-    <h3 ng-if="items.length>0">Total Items in List {{ items.length }}</h3>
     <ol>
         <li ng-repeat="item in items">Dish Name: {{item.name}}
             <br>Short Name: {{item.short_name}} 
@@ -7,4 +6,5 @@
             <br><button ng-click="onRemove({index: $index});">Don't Want This One!</button>    
         </li>    
     </ol>
+    <span ng-if="notFound" class="alert alert-info">Nothing found</span>
 </div>
