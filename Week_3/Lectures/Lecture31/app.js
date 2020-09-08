@@ -30,42 +30,40 @@ function ShoppingListDirectiveLink(scope, element, attrs, controller) {
   console.log("Controller instance is: ", controller);
   console.log("Element is: ", element);
 
+  //property we're watching on scope; indicate if it's a function
   scope.$watch('list.cookiesInList()', function (newValue, oldValue) {
-    console.log("Old value: ", oldValue);
-    console.log("New value: ", newValue);
+    console.log('Old value is: ', oldValue);
+    console.log('New value is: ', newValue);
 
-    if (newValue === true) {
+    if (newValue) {
       displayCookieWarning();
-    }
-    else {
+    } else {
       removeCookieWarning();
     }
-
   });
+  
+  //fucntions that will manipulate dom need to be inside the link function
+  function displayCookieWarning(){
+    //using jqlite
+    //find will try to find the element inside the template for that direcitve not the entire app
+    // var warnElem = element.find("div");
+    // console.log(warnElem);
+    // warnElem.css('display', 'block');
 
-  function displayCookieWarning() {
-    // Using Angluar jqLite
-    // var warningElem = element.find("div");
-    // console.log(warningElem);
-    // warningElem.css('display', 'block');
-
-    // If jQuery included before Angluar
+    //if jquery included before angular
     var warningElem = element.find("div.error");
     warningElem.slideDown(900);
   }
+  
+  function removeCookieWarning(){
+    // var warnElem = element.find("div");
+    // warnElem.css('display', 'none');
 
-
-  function removeCookieWarning() {
-    // Using Angluar jqLite
-    // var warningElem = element.find("div");
-    // warningElem.css('display', 'none');
-
-    // If jQuery included before Angluar
+    //if jquery included before angular
     var warningElem = element.find("div.error");
     warningElem.slideUp(900);
   }
 }
-
 
 function ShoppingListDirectiveController() {
   var list = this;

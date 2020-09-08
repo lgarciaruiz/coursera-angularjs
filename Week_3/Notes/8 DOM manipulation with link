@@ -1,0 +1,44 @@
+Manipulating the DOM with link (lecture 31)
+Manipulating the DOM with jquery lite is possible with angularjs right out of the box. You can also use the full jquery library by simply adding it. The link function allows you to do such a thing and is where you should set up watchers.
+
+Link function allows is the place where you would want to use third party libraries and is compartmentalized inside the directive where you want to use it.
+
+Steps to setting up link function
+1. Declare Link function
+
+    function MyDirective() {
+        var ddo = {
+            scope: {...},
+            link: LinkFunction,
+            templateUrl: 'url.html'
+        };
+        return ddo;
+    }
+
+    - the link funcion can work alongside the controller or it can take over all the controller's responsibities
+    - we cannot inject services into a link function, however if we needed to inject some service we could inject it to the factory that creates the service for the directive
+
+2. Define the link function
+     function LinkFunction(scope, element, attrs, controller){
+         ....
+     }
+
+    - scope: does not need the $ and is omitted to remind that the scope is not injected in the link function. the link function is passed the scope of the directive automatically as the first parameter
+
+    - element: is top level element of the directive; 
+        - the custom element the directive defined or the element the directive is declared as an attribute on.
+        - is a wrapper around the regular DOM element with special functions that come from jqlite
+        - if jquery is included before the angularJS file this element is the jquery element itself and has way more animations
+        - attrs: object that contains references to the attributes declared on the element
+        - controller: a reference to the controller of this directive if there is one
+
+
+SUMMARY
+- DOM Manipulation is usually done inside of the link function
+    - declared on the ddo
+- Link function does not support injection
+    - to use injected components, services, inject them into directive
+- 'scope' parameter is the exact $scope in directive's controller
+- 'element' object represents the element of the directive 
+    - top level element of directive
+    - it's jqlite or jquery object (if jquery is included before angularjs is included in main.html)

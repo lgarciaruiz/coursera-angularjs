@@ -1,0 +1,42 @@
+ Using Directive’s transclude to Wrap Other Elements (lecture 31)
+ Pass an entire template rather than a string or object in the isolate scope of a directive. One common thing that is passed in is a dialogue box.
+
+ transclude allows you to wrap arbitrary content with your directive including expressions and function calls in your html template.
+
+ The expressions of are evaulated in the parents scope not in the directives scope when using transclude.
+
+ Steps to setting up transclude
+ 1. Set transclude to true 
+    function MyDirective() {
+        var ddo = {
+            scope: {...},
+            transclude: true,
+            templateUrl: 'url.html'
+        };
+        return ddo;
+    }
+
+2. Wrap some parent content
+    <my-directive>
+        <span>
+            WARNING! WARNING! {{ ctrl.someprop }}
+        </span>
+    </my-directive>
+
+    - any interpolations such as the one above are evaluated in the parent controller, NOT in our directive.
+
+3. ng-transclude to place wrapped content
+    <div>
+        <div ng-transclude></div>
+    </div>
+
+    - insert evaluated wrapped content into element marked with ng-transclude
+
+SUMMARY
+- transclude allows whole tempales to be passed into a directive
+- the wrapped content is evaluated in the parent's context,
+NOT in the directive's context; this means that the parent's controller content will show
+- in the DDO:
+ transclude: true
+- in Directive’s template:
+    -ng-transclude attribute designates palce for evaluated wrapped content

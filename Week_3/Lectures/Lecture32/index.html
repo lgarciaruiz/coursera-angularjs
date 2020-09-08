@@ -26,6 +26,7 @@
         title="{{list.title}}"
         on-remove="list.removeItem(index)">
 
+        <!-- list.warning is referencing the parent controller from line 15 of this doc -->
         <span class="warning">WARNING! WARNING! {{list.warning}}</span>
 
       </shopping-list>
@@ -38,6 +39,7 @@
 
         <div>
           <div class="title">OH, THE HORROR!</div>
+          <!-- list.warning is referencing the parent controller from line 15 of this doc -->
           <div>{{list.warning}}</div>
         </div>
 
