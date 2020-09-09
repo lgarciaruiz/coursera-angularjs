@@ -1,0 +1,58 @@
+Components & Component-Based Architecture (lecture 33)
+
+Components are a special kind of directive that assumes some defaults which are best practices.
+
+Component API; Components:
+- Only control their own view and data
+    - Never modify data or DOM outside of their own scope
+    - Modifying creates side-effects that lead to chaos
+    - Components always use isolate scope
+- have well-defined public API - inputs and outputs
+    - inputs: use '<' and '@' bindings Only
+    - never change property of passed in object or array
+    - outputs: use '&' for Component event callbacks
+    - pass dta to callback through param map {key: val}
+- well-defined lifecycle
+    - $onInit - controller initialization code
+    - $onChanges(changeObj) - calle whenever one-way bindings are upated
+        - changeObj.currentValue, changeObj.previousValue
+        - on objects it only keeps track of the reference so if the reference doesnt change then this does not track the changes
+    - $postLink - similar to 'link' in directive
+    - $onDestroy - when scope is about to be destroyed
+    - $doCheck - fires everytime the digest loop runs allows you to check things like number of items on array as long as you keep track of the previous amount
+- Application is a tree of Components
+    - Entire application should be comprised of Components
+    - Each one should have a well defined input and output
+    - 2 way data binding is minimized as much as possible
+
+
+Creating a component in angular
+
+1. Register Component with module
+    angular.module('app', [])
+    .component('myComponenet', {
+        templateUrl: 'template.html',
+        controller: CompController,
+        bindings: {
+            prop1: '<',
+            prop2: '@',
+            onAction: '&'
+        }
+    });
+
+2. configure component
+- name of component uses normalized version of html
+- instead of a function you provide an object 
+- not required to provide controller
+- if no controller angular will create one for you labeled $ctrl and add it to the isolate scope
+- scope does not need to be declared since it is automatically added and is always isolate
+- instead use bindings 
+
+3. Reference Props in template
+    <div ng-click="$ctrl.onAction({myArg: 'val'})"> {{ $ctrl.prop1.prop }} and {{ $ctrl.prop2 }}</div>
+    - using the $ctrl label configured for component
+
+4. Use Component in html
+    <my-component prop1="val-1" prop2="@parentProp" on-action="parentFunction(myArg)">
+        {{ $ctrl.prop1.prop }} and {{ $ctrl.prop2 }}
+    </my-component>
