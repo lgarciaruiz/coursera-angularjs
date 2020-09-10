@@ -1,0 +1,26 @@
+Modules (lecture 35)
+Allow us to split up application into smaller parts and later connect them together.
+
+- Module api is used to declare artifacts of our application, components, controllers and so on.
+
+Steps to using modules.
+1. Declare/Create module
+    angular.module('module1',[]);
+
+    - when the dependencies array is declared you are creating the module not retrieving one.
+    - you can declare that a module depends on other modules
+    angular.module('module3',['module1','module2']);
+
+2. Declare Module artifacts
+    angular.module('module1')
+    .controller('MyController', MyController);
+    - no second argument which means we are retrieving the module
+
+3. ng-app="mainModuleName"
+
+best practice is to splt javascript into several files
+
+- modules can be declared in the html script src in any order BUT articfats that belong to a specific module need to be AFTER the module declaration
+- config method runs before any other methods on module, the function for the config can only inject providers or constants; providers are meant to configure services
+- run method executed right after the config method; can only inject instances and constants into the run mehtod NOT providers to prevent services from being reconfigured during runtime
+- if module dependencies have config and run methods on them, all config methods on those dependencies will run first then the actual module's config method then any run methods will run on all modules in the same order

@@ -24,22 +24,21 @@ SpinnerController.$inject = ['$rootScope']
 function SpinnerController($rootScope) {
   var $ctrl = this;
 
-  var cancelListener = $rootScope.$on('shoppinglist:processing', function (event, data) {
-    console.log("Event: ", event);
-    console.log("Data: ", data);
+  //$on returns a deregistration function which can be used to destroy this listener when not the view gets destroyed
+  var cancelListener = $rootScope.$on('shoppinglist:processing', function (event, data){
+    console.log(event, data);
 
     if (data.on) {
       $ctrl.showSpinner = true;
-    }
-    else {
+    } else {
       $ctrl.showSpinner = false;
-    }
+    };
   });
 
+  //use $onDestroy to run the deregistration function for the event listener on the rootscope so that it destroys it when the view for the component gets destroyed
   $ctrl.$onDestroy = function () {
     cancelListener();
   };
-
 };
 
 
@@ -57,12 +56,15 @@ function ShoppingListComponentController($rootScope, $element, $q, WeightLossFil
     if ($ctrl.items.length !== totalItems) {
       totalItems = $ctrl.items.length;
 
+      //broadcasting event from rootscope becuase loading spinner is outside of the view of the shoppinlist controller
+      //namespace is where the broadcast was started
       $rootScope.$broadcast('shoppinglist:processing', {on: true});
       var promises = [];
       for (var i = 0; i < $ctrl.items.length; i++) {
         promises.push(WeightLossFilterService.checkName($ctrl.items[i].name));
       }
 
+      //q.all to deal with all promises at the same time; so if one fails it's becuase something says cookie and all promises will be canceled immediately
       $q.all(promises)
       .then(function (result) {
         // Remove cookie warning
@@ -74,6 +76,7 @@ function ShoppingListComponentController($rootScope, $element, $q, WeightLossFil
         var warningElem = $element.find('div.error');
         warningElem.slideDown(900);
       })
+      //this will execute no matter what the outcome of the promises are
       .finally(function () {
         $rootScope.$broadcast('shoppinglist:processing', { on: false });
       });

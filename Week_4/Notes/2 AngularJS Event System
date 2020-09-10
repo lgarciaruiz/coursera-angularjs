@@ -1,0 +1,55 @@
+AngularJS Event System (lecture 34)
+
+publish-subscribe design pattern
+Publishers send messages to subscribers on a common channel
+
+- Publishers:
+    - mark messages with a classification
+    - Don't know subscribers of if there are any
+- subscribers:
+    - sign up to listen for messages with a particular classification
+    - don't know publishers of if there are any
+
+- In AngularJS, the comon channel is scope
+    - messgages are events that can hold data
+
+Publishing an Event: 
+
+$scope.$emit
+    - goes up through the scope chain, components to the html root
+$scope.$broadcast
+    - events go down the scope chain
+
+Listening for an Event: 
+$scope.$on
+    - takes two args name of event, and function to act once event is received
+
+The root of an angular application is the ng-app directive, this is actually the parent component to all components and has something called $rootScope.
+
+This is helpful becuase when you are trying to reach something from a comopent that has no direct access to another component you can use $rootScope.$broadcast which will broadcast through all components.
+
+Step 1: broadcast or emit an event
+    $scope.$emit('namespace:eventName',{prop:value});
+    - sends event up the chain
+
+     $scope.$broadcast('namespace:eventName',{prop:value});
+    - sends event down the chain
+    - best practice to namespace event name string
+    - you can send object to travel with event and can be unwrapped once it reaches it's destination
+
+Step 2: listen for and handle event
+    $scope.$on('namespace:eventName', handler);
+
+    function handler(event,data){
+        if(data.prop == 'vall'){
+            .....
+        }
+    }
+    - same name as was emmitted/broadcasted
+    - handler function takes two args:
+        - event
+        - data; object that came along with event
+
+
+- $rootScope is never destroyed throughout the entire application
+- this means that the $on method on a $rootScope needs to be de-registered to remove the from memory
