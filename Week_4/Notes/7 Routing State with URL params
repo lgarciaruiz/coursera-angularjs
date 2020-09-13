@@ -1,0 +1,49 @@
+Routing State with URL Parameters (lecture 39)
+
+steps for Routing the view with url Parameters
+1. Set up URL property with Param(s)
+    .state('view1', {
+        url: 'view1/{param1}',
+        templateUrl: 'view1.html',
+        controller: 'View1Ctrl as view1',
+        resolve: {
+            myData: ['$stateParams', function ($stateParams) {
+                return getDataBasedOn($stateParams.param1);
+            }]
+        }
+    });
+
+    - decarle url proptery with name of param wrapped in {}
+    - inject $stateParams service into function that resolves the promise or into the controller
+    - retrieve value of passed in param using $stateParams.nameOfParam
+    - once myData property gets resolved it's available to inject into the controller as normal
+    
+    URL matches
+    url: '/view1/{param1}'
+    would match to:
+    /view1/
+    /view1/Hello
+    /view1/12
+    
+    you can use regular expressions also in the param1 place
+
+2. Inject resolve proptery into controller
+    <a ui-sref="view1({itemId:someVal}")>
+        Link to view with data
+    </a>
+
+    - you can use ui-sref to have a clickable link that would transitoin you to a view that expects params with code above
+    - Here the value of the ui-sref would be the sate name being invoked like a function
+    - the argument for the function would be Param Name / value pairs object
+        - name would have to match the expected params exactly
+
+Summary
+- state's url property can be declared with Parameters
+- Parameters: 
+    - wrapped in curly braces /{paramName}
+    - can have more complex matching rules other than just matching string
+    - support regular expressions
+- use $stateParams service to retrieve Parameters
+    - $stateParams.paramName
+- construct a URL with ui-sref directive:
+    - ui-sref="stateName({paramName:value})

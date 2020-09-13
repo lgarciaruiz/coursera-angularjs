@@ -29,7 +29,24 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         return ShoppingListService.getItems();
       }]
     }
-  });
+  })
+  .state('itemDetail',{
+    url: '/item-detail/{itemId}',
+    templateUrl: 'src/shoppinglist/templates/item-detail.template.html',
+    controller: 'ItemDetailController as itemDetail',
+    resolve: {
+      item: ['$stateParams', 'ShoppingListService', 
+            function($stateParams, ShoppingListService){
+              return ShoppingListService.getItems()
+              //.then because it's a promise and retrun the items given by the asyncronous call
+                .then(function (items){
+                  //use $stateParams to access the param passed into the url
+                  return items[$stateParams.itemId];
+                });  
+            }]
+    }
+  })
+  ;
 }
  
 })();

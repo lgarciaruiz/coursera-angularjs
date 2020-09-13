@@ -1,0 +1,38 @@
+Routing State with resolve (lecture 38 start)
+Resolve property allows you to retrie the data before the controller gets initialized and then pass the data to the controller.
+
+Steps for resolve property
+1. Set up resolve property
+    .state('view1', {
+        url: '/view1',
+        templateUrl: 'view1.html',
+        controller: View1Ctrl as view1',
+        resolve: {
+            myData: ['service', function (Service) {
+                return Servcie.getData();
+            }]
+        }
+    })
+
+    - in example above Service.getData() returns a promise
+    - return value is injected in View1Ctrl as 'myData'
+    - if what is returned from the resolve function is a promise, as in this example, the state will not advance to it's veiw until the promise is resolved.
+    - if the promise is rejected the router will not advance to the new state
+
+2. Inject Resolve Property Into controller
+    View1Ctrl.$inject = ['myData'];
+    function View1Ctrl(myData){
+        var view1 = this;
+        view1.myData = myData;
+    }
+
+    - here we are injecting myData, property from resolve
+    - resolve proerties can be anything not just promises
+
+Summary
+- resolve property can be used to inject values directly into the controller
+- if resolve property is a promise
+    - router will wait for it to resolve before transitioning to the state
+    - if rejected, router will not transition to state at all
+- The name of the key in the resolve's property object is what is to be injected in the corresponding controller's function
+- Resolve can have proerties that contain anything: objects, strings, etc.

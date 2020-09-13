@@ -1,0 +1,6 @@
+<ul>
+  <!-- ui-sref param key name has to match the param name given in the route setup for the itemDetail State -->
+  <li ng-repeat="item in $ctrl.items" ui-sref="itemDetail({itemId:$index})">
+    {{ item.quantity }} of {{ item.name }}
+  </li>
+</ul>
