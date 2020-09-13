@@ -10,16 +10,14 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
 
   // Redirect to tab 1 if no other URL matches
   $urlRouterProvider.otherwise('/tab1');
-
   // Set up UI states
   $stateProvider
-    .state('tab1', {
+    .state('tab1',{
       url: '/tab1',
       templateUrl: 'src/tab1.html'
     })
-
-    .state('tab2', {
-      url: '/tab2',
+    .state ('tab2',{
+      url: '/tab2', //when there is no url associated with the state the ui-sref will still work but the url in the browser will not change. that is becuase the routing is based on state not url if no url is provided
       templateUrl: 'src/tab2.html'
     });
 }

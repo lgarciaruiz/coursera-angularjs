@@ -15,7 +15,7 @@ function MainShoppingListController(ShoppingListService) {
     .then(function (result) {
       mainList.items = result;
     });
-  };
+  }; 
 }
 
 })();

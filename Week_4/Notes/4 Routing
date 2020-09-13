@@ -1,0 +1,79 @@
+Routing (lecture 36)
+
+Traditional approaches
+Web 1.0 
+Browser updates would be handled by server. These types of updates are called Coarse-grained updates because of the large amounts of data that had to be processed even for smallest updates.
+
+Ajax - Web 2.0
+Allowed for updates using javascript to only update the data that was needed and not whole page downloads. These types of updates are called Fine-grained updates.
+Bugs - the back button would not work as expected instead of going back to the state before they clicked a button they would go back to a previous page altogether. 
+    - this happens because the server was still responsible for serving up content
+
+New Approaches
+Single Page Application
+The initial request is done to the server but after that navigating through the pages is done within the browser and does not go back to the server. This is handled with the #. When navigating through the page a new address is added after the # and the back button works naturally.
+
+
+It is possible to route without the need for the URLs at all. This uses an object that holds the state of the UI and recreate UI based on the state of the object. With this the URL is not updated only programmatic state of the view is updated.
+
+ngRoute vs ui-router
+
+ngRoute
+- seperate JS file
+- developed by google and community
+- no concept of UI state
+- Every rout must be represented by a URL
+- no concept of nested views
+- ok for prototype projects
+
+ui-router
+- seperate JS file
+- developed by community
+- UI state is central
+    - can have a route with no unique URL for that route
+- URL routing is also supported
+    - UI state is updated based on the URL
+- Nested veiws are supported
+- Better choice for more serious projects 
+
+Using ui-router Steps 
+1. Reference in html
+    - must be after angularjs package
+2. Place ui-view initial view placholder
+ <body>
+    <ui-view></ui-view>
+ </body>
+3. Declare ui-router as dependency
+    angular.module('app',['ui.router'])
+4. configure routes in .config method
+
+    angular.module('app')
+    .config(RoutesConfig);
+
+    RoutesConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+    function RoutesConfig($stateProvider, $urlRouterProvider){...}
+    - two services stateprovider and urlRouterProvider
+
+    - configure ui states
+        $stateProvider.state('view1'. {
+            url: '/view1',
+            template: '<div></div>' //can use templateUrl
+        })
+
+        .state('view2'. {....})
+
+        - each state has a uniquie name
+        - optionally add a url for the state
+        - template for what the <ui-view></ui-view> will display
+        - can chain more states
+    
+    - common practice is to configure $urlRouterProvider.otherwise('/defaultviewurl')
+        - this helps when someone mistypes or has an old outdated url, and brings them to a default view you choose
+
+
+NOTES FROM CODE
+- ui-router comes with two directives beside ui-view. ui-sref and ui-sref-active
+    - ui-sref will be used to add the name of a state to link to so ui-sref="nameOfState"
+    - ui-sref-active will let you add a class to that you want the active state to have so ui-sref-active="nameOfClass"
+
+- when not using the url property for the state object config the link will not appear as clickable and the browser will not recognize the state as url so you will be unable to navigate to it by typing url but you will be able to by clicking on its link

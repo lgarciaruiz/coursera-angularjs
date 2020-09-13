@@ -1,0 +1,24 @@
+Routing State with Controller (lecture 37)
+It is possible to have a controller for the html template of a route
+
+Declare controller in state config
+.state('home',{
+    url: '/',
+    templateUrl: 'home.html',
+    controller: 'HomeCtrl as home'
+});
+
+- in the example above the controller property is set to a string that is specifing the HomeCtrl(assume HomeCtrl is defined somewhere and registered with the angular module) as home. 
+- You can also do with the controllerAs property.
+- you can also reference the controller function if you have access to that function at this point
+
+- this allows for the template referenced for the state, in this case home.html, to be slimer by removing a div that gets added only to set the controller with controller as syntax
+
+<div ng-controller="HomeCtrl as home">
+<div>content</div>
+</div>
+
+becomes just
+<div>content</div>
+
+- this allows to potentially use the home.html in a different place with a completely different controller
