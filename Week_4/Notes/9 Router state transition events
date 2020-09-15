@@ -1,0 +1,48 @@
+Router State Transition Events (lecture)
+
+When the router is performing its functions such as retrieving data from a server it can be useful to plug into these events.
+
+All router events are fired at the $rootScope and broadcast down.
+
+ui-router exposes events such as:
+
+$stateChangeStart
+- fires when state change transition begins
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
+        .....
+    });
+
+ - if it's waiting for some sort of a server response this might be a good place to start a spinner loading screen
+
+$stateChangeSuccess
+- fires once the state transition is complete
+
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options){
+        .....
+    });
+
+ - if a loading screen was on you can now turn it off
+
+ $stateChangeError
+- fires when an erro occurs during transition
+
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+        .....
+    });
+
+ - if any errors occur in resolve function they will not be thrown in console; you have to listen for this event to catch state changes error
+
+$stateChangeStart
+- if you want to stop the transition from happening for example once the a state change starts --> you evaluate some data and want to stop the transition you can do so using
+
+event.preventDefault() to prevent the transition from occuring
+
+Summary
+- ui-router exposes numerous state change events taht our code is able to listen for
+- all ui-router events are fired on the $rootScope
+- $stateChangeStart - starts the state transition
+    - you can call event.preventDefault to prevent transition from happening
+- $stateChangeSuccess indicates a succesful transition end
+- $stateChangeError indicates a transition failed, including having errors in the resolve
+    - listen for this event to catch ALL state change errors including resolve property errors

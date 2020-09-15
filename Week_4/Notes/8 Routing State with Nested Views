@@ -1,0 +1,45 @@
+Routing State with Nested Views (lecture 40 start)
+Master detail view pair
+Master-detail view pair: would be for example when you have a view for a list and can click on an item to display the detail of that item. The detail will have a view as well. The detail view can be a nested view for the the list view.
+
+With ui-router: child states inherit resolves and customer data properties among other things from the parent state.
+
+Declaring a child state steps
+1. Setting up Child (nested) state
+    .state('view1.child', {
+        url: '/detail/{param1}',
+        templateUrl: 'view1Detail.html'
+        ....
+    });
+
+    - declare with .notation where parentViewName.childViewName
+    - if a url is declared:
+        - the child url is concatenated to the parent url for example:
+            - if parent url is parentUrl/url
+            - then child url is parentUrl/url/detail/{param1}
+    - having a child state also means that somewhere in the parent template there is a declaration of <ui-view></ui-view> that will bring in the template for the url
+
+Inherited resolve properties for child states
+.state('view1', {
+    resolve: {
+        myData: 'someVal',
+    }
+})
+.state('view1.child', {
+    controller: 'childCtrl as child'
+});
+
+- when you have a resolve property for a parent view, the child view has access to the myData property and this property can be injected direclty in the child view's controller 
+
+    childCtrl.$inject = ['myData'];
+    function childCtrl(myData){
+        ....
+    };
+- this allows us to access the data without having to make extra server calls
+
+SUMMARY
+- Nested states allow us to logically represent nested Views
+- parent state template has a ui-view in its template for the child state's template to insert its html
+- child state name is usually decalres with syntax 'parent.child'
+- the optionally declare url of the child gets concatenated to the declared url of the parent
+- the parent's resolve property is inherited by the child and is injectable directly into the child's controller
