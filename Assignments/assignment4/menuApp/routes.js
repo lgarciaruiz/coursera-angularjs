@@ -1,6 +1,7 @@
 (function(){
 
-    angular.module('MenuApp').config(routes);
+    angular.module('MenuApp')
+    .config(routes);
 
     routes.$inject = ['$urlRouterProvider', '$stateProvider'];
     function routes($urlRouterProvider,$stateProvider){
@@ -15,13 +16,16 @@
 
         .state('Categories', {
             url: '/categories',
-            templateUrl: './src/templates/categories.html',
+            templateUrl: './src/templates/main-categories.html',
             controller: 'CategoriesCtrl as Categories',
-            //TODO: implement resolve need to get all restaurant categoris
             resolve: {
-
+                categoriesData: ['MenuDataService', 
+                    function(MenuDataService){
+                        return MenuDataService;
+                    }
+                ]
             } 
-        })
+        });
     }
 
 })();
