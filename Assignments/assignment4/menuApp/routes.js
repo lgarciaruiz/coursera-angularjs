@@ -14,17 +14,28 @@
             templateUrl: './src/templates/home.html'
         })
 
-        .state('Categories', {
+        .state('categories', {
             url: '/categories',
             templateUrl: './src/templates/main-categories.html',
             controller: 'CategoriesCtrl as Categories',
             resolve: {
                 categoriesData: ['MenuDataService', 
                     function(MenuDataService){
-                        return MenuDataService;
+                        return MenuDataService.getAllCategories();
                     }
                 ]
             } 
+        })
+
+        .state('items', {
+            url: '/items/{itemId}',
+            templateUrl: './src/templates/main-items.html',
+            controller: 'ItemsCtrl as Items',
+            resolve: {
+                itemsData: ['MenuDataService', '$stateParams', function(MenuDataService,$stateParams){
+                    return MenuDataService.getItemsForCategory($stateParams.itemId);
+                }]
+            }
         });
     }
 
