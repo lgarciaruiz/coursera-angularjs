@@ -1,0 +1,44 @@
+Testing Javascript with Jasmine
+
+Unit Testing
+Independent checking for proper operation of the smallest testable part of an application
+    - Independent: isolated from the rest of the system
+    - Smallest testable - means you have to approach all of the code development from this perspective
+    - Should be repeatable - meaning new code additions should still pass
+
+mocking
+technique where dependency and its behavior is imitated (or faked)
+- can be done by the developer or a mocking library
+
+
+Testing Framework
+Jasmine
+
+
+Steps for using Jasmine
+- download and unzip jasmine standalone into a directory
+    - https://github.com/jasmine/jasmine/releases
+- erase everything in src and spec directories
+- place you aplication code into the src directory
+- place test code or a spec into the spec directory
+- update SpecRunner.html
+    - replace references to erased src and spec files with yours
+- start browser-sync (or whatever you use for local server) and go to http://../SpecRunner.html to have your specs run
+
+Writing a Spec (test)
+describe('My Functon', function(){
+    var initValue;
+
+    beforeEach(function(){
+        initValue = 'someValue';
+    });
+
+    it should('Should not return true', function(){
+        var result = someFunc(initValue);
+        expect(result).not.toBe(true);
+    });
+});
+
+- describe is a container for all our tests
+- optionally add beforeEach: whatever you add to this function will be invoked to each test before it is run
+- it - is the actual test

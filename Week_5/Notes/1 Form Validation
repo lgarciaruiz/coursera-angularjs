@@ -1,0 +1,59 @@
+Form Validation
+
+Grouping all the input elements under a single form element is needed when using with angularjs. Form is not required for html validity but it is for angularjs.
+
+angularjs basically takes over the action input type.
+
+We can use input type button or a simple html button element.
+
+Steps to setup form validation
+1. Create a form in html with name attributes
+    <form name="formName'>
+        <input type="text" name="name>
+        <button>Submit</button>
+    </form>
+
+    - form needs a value for the name attribute
+2. bind input with ng-model
+    <form name="formName'>
+        <input type="text" name="name" ng-model="ctrl.name">
+        <button ng-click="ctrl.go()">Submit</button>
+    </form>
+    - in code above we assume there is a controller named ctrl
+    - ng-model is used to bind to an element
+    - ng-click is used to call the function - opitonally
+3. Declare html5 validation attributes
+    <form name="formName' novalidate>
+        <input type="text" name="name" ng-model="ctrl.name" required min-length="4">
+        <button ng-click="ctrl.go()">Submit</button>
+    </form>
+    - code above has "required" and min-legnth of 4 chars
+    - opitonally we can use angular supplied form validation attributes, example ng-min-length.
+        - only difference between angular supplied validation attributes is that with the angularjs ones you can use a binding value from your controller to set the attributes
+    - novalidate is used on the form because we need to disable the html native form validation to use the angularjs validation
+4. Use angularjs form bound objects
+    <form name="formName' novalidate>
+        <input type="text" name="name" ng-model="ctrl.name" required min-length="4">
+        <span ng-if="formName.name.$error.required && formName.name.$touched">Name is required</span>
+        <button ng-click="ctrl.go()">Submit</button>
+    </form>
+    - span with ng-if will only show up if the error and the input type has been touched
+    - formName.nameOfInput.$error.required
+    - we can access the name of the form and the input fields becuase angularjs creates a form controller, attached to $scope, with the name of the form attribute name when it sees there is a form in the html after it compliles
+    - $touched is an input state indicator if a user clicked on the field it will be set to true
+    
+    Bound Properties
+    - $invalid to conditionally disable or enable if the form is valid 
+
+5. Use Angular validation styles
+ .ng-touched.ng-valid {
+     border: 2px green solid;
+ }
+
+ .ng-touched.ng-invalid {
+     border: 2px red solid;
+ }
+
+    - angularjs injects the ng validation classes 
+
+    ng-model, ng-model-controller and form controller documentation for more classes and validation bound objects

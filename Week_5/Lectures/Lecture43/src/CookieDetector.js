@@ -5,10 +5,10 @@
 //     if (item.indexOf("cookie") !== -1) {
 //       return true;
 //     }
-//
+
 //     return false;
 //   }
-//
+
 // }
 
 
@@ -20,7 +20,7 @@
 //       return true;
 //     }
 //   }
-//
+
 //   return false;
 // }
 

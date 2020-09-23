@@ -17,6 +17,7 @@
           required
           minlength="4"
           ng-maxlength="10">
+          <!-- if the validation rules have not been met then the interpolation will not happen -->
           {{ reg.user.username }}
           <span
             ng-if="(regForm.username.$error.minlength || regForm.username.$error.required) && regForm.username.$touched">
@@ -27,14 +28,17 @@
           </span>
           <br>
 
+          <!-- email type inputs have an implicit validation rule that says the input must have something@somewhere -->
         <input type="email" name="email" placeholder="Email"
           ng-model="reg.user.email"
           required>
+          <!-- $invalid will catch implicit and explicit validation errors -->
           <span ng-if="regForm.email.$invalid && regForm.email.$touched">
             Must be a valid email address: handle@domain format
           </span>
           <br>
 
+          <!-- pattern is a regular expression and is a validation attribute -->
         <input type="text" name="phone" placeholder="Phone ###-###-####"
           ng-model="reg.user.phone"
           pattern="(\d{3})-(\d{3})-(\d{4})">
@@ -43,6 +47,7 @@
           </span>
           <br>
 
+          <!-- button will nly show up if the form is not invalid; if it is valid it will show the button and the button has a function -->
         <button
           ng-disabled="regForm.$invalid"
           ng-click="reg.submit()">Submit</button>
@@ -53,13 +58,14 @@
       </form>
     </fieldset>
 
+    <!-- if reg completed it will show input -->
     <div id="info" ng-if="reg.completed">
       Username: {{ reg.user.username}} <br>
       Email: {{ reg.user.email}} <br>
       Phone: {{ reg.user.phone }}
     </div>
 
-    <script src="/coursera-angularjs/angular.min.1.5.8.js"></script>
+    <script src="../../../angular.min.1.5.8.js"></script>
     <script src="src/app.js"></script>
 
   </body>
