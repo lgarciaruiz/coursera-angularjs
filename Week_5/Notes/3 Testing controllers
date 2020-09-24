@@ -1,0 +1,76 @@
+Testing AngularJS Controllers (lecture 44)
+Angularjs provides a helper module to test angular applications, ngMock.
+
+steps 
+1. beforeEach Setup
+    describe('tests', function(){
+        beforeEach(module('myApp'));
+        ....
+    });
+
+    - use angular.mock.module; module is the short version of it as used in code above.
+    - give it the name of the module for which you want to test.
+        - this means the controller you watn to test should be declared on that module in the app.
+
+    describe('tests', function(){
+    beforeEach(function () {
+        module('myApp');
+
+        setupMock();
+    });
+    ....
+    });    
+
+    - you can also set it in an anonymous function like above to set up the module along with other mock objects.
+    - you can also have multiple beforeEach methods
+
+2. beforeEach setup 2
+Usually there is another beforeEach method that uses the angular mock inject method to inject any objects that we need to have available for the test. Example below.
+
+var $controller;
+var mockService;
+var myCtrl;
+
+beforeEach(inject(function(_$controller_){
+    $controller = _$controller_;
+
+    mockService = {};
+    mockService.aMethod = function() {
+        return 'fake-value';
+    };
+
+    myCtrl = $controller('MyCtrl', { MyService: mockService });
+}));
+
+    - the inject method is an alias for angular.mock.inject
+    - the weird argument _$controller_ refers to the controller service which is needed to instantiate a controller. The underscores are just there to help differentiate from the var $controller so that you can assign it the correct value. When angular looks for _$controller_ it strips out the _ when using the inject method
+    - next create a mockservice and a method that returns mock data
+    - next instantiate the controller using $controller and passing in the string name of the actual controller you're testing
+    - the $controller also takes a second object argument where the property is assinged any dependency that the real controller usually needs
+        - in the code above were are injecting MyService but instead of passing a real version of MyService we tell it to use mockService
+        - this allows us to control the values the that will be passed to the controller to test only the controller and not the service
+    - assign controller instance to myCtrl or a vaiable that will be accessible the it method below.
+
+3. Test method
+
+    it('should update init value on item add', function(){
+        myCtrl.addItem();
+        expect(myCtrl.value).toBe('fake-value');
+    });
+ }); //end of describe method
+
+    - the functions excersiced are attache to the controller instance; so take your function that you want to test that belong to that controller.
+    - this means that the controller is defined with the controller as syntax
+
+    - if not using controller as syntax we'd have to pass in the $scope similar to the fake service
+    - then call the method on the $scope and check that the value is set to what we think it should be set to
+
+4. Include JS files in SpecRunner.html
+
+<!-- include source files here -- >
+<script src="lib/angular.min.js"></script>
+<script src="lib/angular.mocks.js"></script>
+<script src="app.js"></script>
+
+<!-- include spec files here -- >
+<script src="spec/MyCtrl.spec.js"></script>

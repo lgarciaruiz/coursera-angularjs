@@ -1,0 +1,56 @@
+Testing AngularJS Controllers (lecture 44)
+In the file named Testing controllers we went over creating a service manually without help from angularjs.
+
+There is another way to create mock service, factories, directives, etc. usin the provide service.
+
+
+$provide, steps
+
+1. Setup mock service with $provide
+    beforeEach(function(){
+        //inject the provide service using the module method; you cannot inject non provide services
+        module(function($provide){
+            //create service using the $provide service method
+            $provide.service('MockService', function(){
+                var service = this;
+                service.aMethod = function(){
+                    return 'fake-value';
+                };
+            });       
+        });
+        module('myApp');
+    });
+    
+    - in the code above the service is injected to the module method and defined inline as a callback
+    - the first argument is the defined string name to inject into other calls
+    - we don't need to save the service to a variable in the describe method becuase it is injected into the module
+
+2. inject the service into the next beforeEach method
+
+var $controller;
+var myCrtrl;
+
+beforeEach(inject(function(_$controller_,MockService){
+    $controller = _$controller_;
+
+    myCrtrl = $controller('MyCtrl', { MyService: MockService });
+}));
+
+3. Create tests
+
+    it('should update init value on item add', function(){
+        myCtrl.addItem();
+        expect(myCtrl.value).toBe('fake-value');
+    });
+ }); //end of describe method
+
+ Summary
+ - angular provides ngMock module to help with unit Testing
+ - to test a controller you need:
+    - load module controller lives in using angular.mock.module('name'); shorthand is module('name');
+    - use $controller to instantiate controller you want to test
+    - use controller instance to invoke methods, access props, etc.
+- Do most of the setup in beforeEach
+    - At least module('name') loading, but maybe more
+- $provide service can be inject only into module('name')
+- for other services, use angular.mock.inject method
