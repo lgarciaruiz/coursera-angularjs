@@ -1,0 +1,73 @@
+Testing AngularJS Directives (lecture 46)
+
+To test a directive we need to setup a mock environment similar to the actual environment it runs on.
+
+1. beforeEach setup
+
+    var $compile;
+    var $rootScope;
+    var expectedHtml = 'some html';
+
+    beforeEach(module('myApp'));
+
+    beforeEach(inject(function(_$rootScope_, _$compile_){
+        $rootScope = _$rootScope_;
+        $compile = _$compile_;
+    }));
+
+    - create a variable that will hold the expected html out as a string.
+    - inject the $rootScope and the $compile services
+    - $compile serivce is the service that takes the angular code and translates (compiles) down to javascript code that manipulates the DOM.
+    - we will need the $compile code for the directive.
+
+2. beforeEach setup for using templateUrl
+
+    beforeEach(inject(function($templateCache){
+        var template = null;
+
+        var req = new XMLHttpRequest();
+        req.onload = function() {
+            template = this.responseText;
+        };
+        req.open('get', 'template.html', false);
+        req.send();
+
+        $templateCache.put('template.html', template);
+    }));
+
+    - this step is needed if the directive uses templateUrl
+    - when angularjs loads html templates for directives or components it first checks if that template already exists in the $templateCache; if it exists it uses this template and does not try to do an asynchronous request to the a new version
+    - if we manually put the template into the cache we don't have to deal with async requests.
+        - this is done in the var req code; this is a bit of a hack; it's best to use a library called karma that uses the command line
+    - disable the asynchronous request by passing false to the open function
+    - last step is check if the contents of the template are in the cache
+
+3. test method
+
+    it('should properly insert content', function() {
+        var item = { name: 'John' };
+        $rootScope.item = item;
+
+        var html = '<my-directive item="item"></my-directive>";
+
+        var elem  $compile(html)($rootScope);
+
+        $rootScope.$digest();
+
+        expect(elem.html()).toContain(expectedHtml);
+    });
+    - in the code above we create an object named item and attach it to the rootScope as a property named item.
+    - create html variable that is equal to how you would set a directive to use it in the html index or any other file.
+    - then compile the directive html; this returns a function becuase the $compile service returns a function; the function needs a scope as an argument to bind the data to the newly compiled html and so we pass in the $rootScope which contains the item property
+    - we then need to kick off the digest process manually so we call .digets() on the $rootScope
+        - after this call the html will have data and can be tested with expectations
+    - you can then call the compiled html which will be in elem.html() and check if it contains expectedHtml
+
+SUMMARY
+- use mock inject to inject $rootScope and $compile services in beforeEach
+- if directive uses templateUrl, use some method to place the template contents into $templateCache
+- in the test method, place whatever props are needed for teh directive on the $rootScope
+- use $compile service to compile directve string and then using the returned function to bind with data by passing in $rootScope
+- Call $rootScope.digest() to update the compiled HTML
+- Finally test the .html() of the variable you bound the html to and see if it matches your expected result
+    

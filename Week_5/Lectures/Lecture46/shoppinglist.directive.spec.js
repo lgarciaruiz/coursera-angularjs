@@ -22,6 +22,7 @@ describe('shoppingList directive', function() {
     $rootScope = _$rootScope_;
   }));
 
+  //to stop angular js from asynchronously getting the html template file we use $templateCache
   beforeEach(inject(function($templateCache) {
     var directiveTemplate = null;
     var req = new XMLHttpRequest();
@@ -38,18 +39,22 @@ describe('shoppingList directive', function() {
 
   it('Replaces the element with the appropriate content', function() {
 
+    //this is the expected data that the directive expects to have passed into it
     var list = {};
     list.items = [
       {name: "item 1", quantity: "1"},
       {name: "item 2", quantity: "2"}
     ];
+    //give the list to the rootscope
     $rootScope.list = list;
 
-    // Compile a piece of HTML containing the directive
+    // Compile a piece of HTML containing the directive; it expects my-list to be set to list and a string that is set on the title attribute
     var html = "<shopping-list my-list='list' title='test title'></shopping-list>"
+    //compile the html, returns a function and give that function the $rootScope that has the data it will need for the directive
+    //element below ends up being the directive compiled with the data it needs
     var element = $compile(html)($rootScope);
 
-    // fire all the watches, so the scope expressions will be evaluated
+    // fire all the watches, so the scope expressions will be evaluated; will also insert the data into the html
     $rootScope.$digest();
 
     // Check that the compiled element contains the templated content

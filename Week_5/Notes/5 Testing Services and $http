@@ -1,0 +1,48 @@
+Testing AngularJS Services and $http (lecture 45)
+
+Testing services is easy. Testing a service that connects to a server is made easy with the $httpBackEnd service. 
+
+$httpBackEnd service - intercepts calls made to the server and lets you simiulate responses.
+
+Setting up tests for services with $http
+
+1. beforeEach setup
+    var myService;
+    var $httpBackEnd;
+
+    beforeEach(function() {
+        module('myApp');
+
+        inject(function ($injector){
+            myService = $injector.get('MyService');
+            $httpBackEnd = $injector.get('$httpBackend');
+        });
+    });
+
+    - Need to get regulr angular $injector service
+        - $injector is the servcie angular uses in the backend to do injection for us
+        - we can use $injector to retrieve instances of artifacts like our service from the module the service is attached to
+    - retrieve the service using hte $injector.get method passing the string name of the service.
+        - $injector.get('NameOfServiceAsRegistered');
+    - if the service does not need to connect to a server you can stop at the get method
+    - if service uses the $http service we need to retrieve the mock service for $http that angular provides called $httpBackEnd
+    - in the code above we retrieve the httpBackEnd service using the same injector get method and assign it to an exteranl variable called $httpBackEnd
+
+2. Test method
+ it('should return some data', function(){
+     $httpBackEnd.whenGET('http://....')
+     .respond(['val1', 'val2']);
+
+     myService.getItems().then(function(resonse){
+         expect(response.data)
+            .toEqual(['val1', 'val2']);
+     });
+
+     $httpBackEnd.flush();
+ })
+
+    - simulate the http call with whenGET
+        - this tells the test to expect a get call to what url and what to respond with when it sees this call.
+    - we can the call our service method as usual and test the resulsts.
+    - if the httpBackEnd service is involved we need to call its flush method.
+        - this allows the code to run asynchrounously but keeps the tests synchronous.

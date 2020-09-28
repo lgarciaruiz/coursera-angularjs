@@ -1,0 +1,40 @@
+Testing AngularJS Components (lecture 47)
+
+ngMock module provides a helper service named $componentController that allows us to create our component controllers to make it easy to unit test.
+
+Setup
+1. beforeEach
+
+var $componentController;
+beforeEach(module('MyApp'));
+
+beforeEach(inject(function(_$componentController_){
+    $componentController = _$componentController_;
+}));
+
+2. test Method
+
+    it('should update value', function(){
+        var bindings = {
+            prop1: {val: 'some val'}
+        };
+
+        var ctrl = $componentController('myComp', {}, bindings);
+
+        var updatedVal = ctrl.val;
+        expect(updatedVal).toEqual('some val');
+    });
+
+    - create bindings the controller expects
+    - create the controller for the component with the fist arg being the name of the component as declared in app module, injections component is expecting, pass the bindings object created for the component controller
+    - finally set the updatedVal equal to the val in the controllerand check if it is equal to what you expect
+
+
+SUMMARY
+- use the following steps to test a component
+- in beforeEach:
+    - use mock inject function to inject $componentController service
+- in test Method
+    - setup binding object with expected props (if any)
+    - setup objects controller expects to be injected (if any)
+    - create controller with $componentController('componentName', injections, bindings)
