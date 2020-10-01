@@ -1,13 +1,13 @@
+<div id="main-content" class="container">
     <div class="jumbotron">
-      <img src="../../../../images/jumbotron_768.jpg" alt="Picture of restaurant" class="img-responsive visible-xs">
+      <img src="../../../../../../images/jumbotron_768.jpg" alt="Picture of restaurant" class="img-responsive visible-xs">
     </div>
-
     <div id="home-tiles" class="row">
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="#" onclick="$dc.loadMenuCategories();"><div id="menu-tile"><span>menu</span></div></a>
+        <a ui-sref="public.menu"><div id="menu-tile"><span>menu</span></div></a>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="#" onclick="$dc.loadMenuItems('SP');">
+        <a ui-sref="public.menuitems({category: 'SP'})">
           <div id="specials-tile"><span>specials</span></div>
         </a>
       </div>
@@ -19,4 +19,6 @@
           </div>
         </a>
       </div>
-    </div><!-- End of #home-tiles -->
+    </div>
+  </div>
+  

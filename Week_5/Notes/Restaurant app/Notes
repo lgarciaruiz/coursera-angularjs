@@ -1,0 +1,11 @@
+ng-strict-di: tells angularjs to do strict dependency injection, will throw erro if no protection from minimization.
+
+ui-view tag can have stuff inside of it and the contents will display if the ui-view has not gotten the content to display; this happens becuase the browser will not know what ui-view is so it will just ignore the tag and display what it knows 
+
+state.abstract: the abstract property of a state when set to true means that you can never go directly to that state; it is a parent and child states can inherit from this state
+
+When angular pulls in the templateUrl templates; these requests are made asynchronously
+
+$http service provides an ability for us to catch requests that go out and catch responses as they com in. These are called interceptors.
+
+interceptors are factories that will create a funcion and wait for the return value from the function. (example in loading.interceptor.js)
