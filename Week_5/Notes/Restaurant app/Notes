@@ -9,3 +9,7 @@ When angular pulls in the templateUrl templates; these requests are made asynchr
 $http service provides an ability for us to catch requests that go out and catch responses as they com in. These are called interceptors.
 
 interceptors are factories that will create a funcion and wait for the return value from the function. (example in loading.interceptor.js)
+
+Images with interpolation: remember to change src to ng-src for images so that it doesnt load an error before angular can interpolate
+
+ui-sref-active attribute is where you can put classes for active states
