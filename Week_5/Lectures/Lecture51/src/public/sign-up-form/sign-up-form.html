@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <h1>Sign up below</h1>
+        <form name="signUpForm" novalidate>
+
+            <input class="form-control form-control-lg"  type="text" name="userName" ng-model="formCtrl.user.name" placeholder="Name" required>
+            <span ng-if="signUpForm.userName.$error.required &&signUpForm.userName.$touched">*Name is a required field</span><br/>
+
+            <input class="form-control form-control-lg" type="text" name="userLastName" ng-model="formCtrl.user.lastName" placeholder="Last Name" required minlength="2">
+            <span ng-if="signUpForm.userLastName.$error.required &&signUpForm.userLastName.$touched">*Last Name is a required field</span><br/>
+
+            <input class="form-control form-control-lg" type="email" name="userEmail" ng-model="formCtrl.user.email" placeholder="Email Address" required>
+            <span ng-if="signUpForm.userEmail.$invalid && signUpForm.userEmail.$touched">*Enter valid Email</span><br/>
+
+            <input class="form-control form-control-lg" type="tel" name="userPhone" ng-model="formCtrl.user.phoneNumber" pattern="(\d{3})-(\d{3})-(\d{4})" placeholder="Phone Number"><br>
+
+            <input ng-class="{ 'ng-invalid': !formCtrl.favDishExists }" class="form-control form-control-lg" type="text" name="userFavDish" ng-model="formCtrl.user.favDish" placeholder="Favorite Menu Dish Number">
+            <span ng-if="!formCtrl.favDishExists && signUpForm.userFavDish.$touched">*No such menu number exists</span>
+            <br><br>
+
+            <button ng-disabled="signUpForm.$invalid" class="btn btn-large btn-warning" type="submit" ng-click="formCtrl.submitUser()">Sign Up</button>
+
+            <span ng-if="formCtrl.signUpCompleted">Your information has been saved!</span>
+        </form>
+    </div>
+</div>

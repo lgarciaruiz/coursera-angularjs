@@ -1,0 +1,24 @@
+<div class="container">
+    <div ng-if="!userProfileHomeCtrl.user" class="row">
+        <h2 >Not Signed Up Yet. <a ui-sref="public.signUpForm">Sing Up Now!</a></h2>
+    </div>
+
+    <div ng-if="userProfileHomeCtrl.user" class="row">
+        <h2>Welcome {{userProfileHomeCtrl.user.name}} {{userProfileHomeCtrl.user.lastName}}</h2>
+        <h3>Here is your profile:</h3>
+        <div class="col-sm-12 profile-container">
+            <div class="col-sm-6">
+                Name: {{userProfileHomeCtrl.user.name}}<br>
+                Last Name: {{userProfileHomeCtrl.user.lastName}}<br>
+                Email: {{userProfileHomeCtrl.user.email}}<br>
+                Phone Number: {{userProfileHomeCtrl.user.phoneNumber}}<br>
+                Favorite Dish: {{userProfileHomeCtrl.user.userDish.name}}<br>
+            </div>
+            <div class="col-sm-6">
+                <img ng-src="../../../../../../images/menu/{{userProfileHomeCtrl.user.userDish.category_short_name}}/{{userProfileHomeCtrl.user.userDish.short_name}}.jpg" alt="{{userProfileHomeCtrl.user.userDish.name}}"><br>
+                {{userProfileHomeCtrl.user.userDish.description}}
+            </div>
+        </div>
+
+    </div>
+</div>

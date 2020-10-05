@@ -112,7 +112,15 @@
     font-style: italic;
   }
   /* END SINGLE CATEGORY PAGE */
-  
+
+  /* Profile Page */
+  .profile-container {
+    background-color: #f6b319;
+    padding: 20px;
+    color: #333;
+    font-weight: 700;
+  }
+  /* END profile Page */
   
   /********** Large devices only **********/
   @media (min-width: 1200px) {
@@ -184,3 +192,19 @@
     }
   }
   
+  input {
+    color:black;
+  }
+
+  .btn-warning {
+    background-color: #f6b319;
+    border-color: #f6b319;
+  }
+
+  .ng-touched.ng-valid {
+    border: 2px green solid;
+  }
+  
+  .ng-touched.ng-invalid {
+    border: 2px red solid;
+  }

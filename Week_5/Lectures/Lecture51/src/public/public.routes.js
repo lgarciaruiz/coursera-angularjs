@@ -34,6 +34,17 @@
                     return MenuService.getMenuItems($stateParams.category);
                 }]
             }
+        })
+        .state('public.signUpForm', {
+            url: '/signupform',
+            templateUrl: 'src/public/sign-up-form/sign-up-form.html',
+            controller: 'SignUpFormController',
+            controllerAs: 'formCtrl'
+        })
+        .state('public.userProfile', {
+            url: '/userprofile',
+            templateUrl: 'src/public/user-profile/user-profile-home.html',
+            controller: 'UserProfileHomeController as userProfileHomeCtrl'
         });
     }
 })();
